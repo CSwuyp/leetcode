@@ -9,13 +9,16 @@ typedef struct {
 	string name;
 	int ave;
 }Stu;
-
 vector<Stu> vec;
-
+int cmp(const Stu& lhs, const Stu& rhs)
+{
+	return lhs.ave > rhs.ave;
+}
 int main() {
 	string line;
 	stringstream ss;
-	while (getline(cin, line) && line != "") {
+	while (getline(cin, line) && line != "") 
+	{
 		Stu s;
 		int cnt = 0;
 		double sum = 0.0;
@@ -25,29 +28,18 @@ int main() {
 		//cout << ss << endl;
 		ss >> s.name;
 		//cout << s.name << endl;
-		while (ss >> score) {
+		while (ss >> score) 
+		{
 			sum += score;
 			cnt++;
 		}
-		s.ave = (int)(sum / (double)cnt + 0.5);
+		s.ave = (int)(sum / (double)cnt + 0.5);//这里+0.5的意思是如果4舍5入
 		//cout << s.ave << endl;
 		vec.push_back(s);
 	}
-
-	for (int i = 0; i < vec.size(); ++i) {
-		for (int j = i + 1; j < vec.size(); ++j) {
-			if (vec[i].ave < vec[j].ave) {
-				string name = vec[i].name;
-				int ave = vec[i].ave;
-				vec[i].name = vec[j].name;
-				vec[i].ave = vec[j].ave;
-				vec[j].name = name;
-				vec[j].ave = ave;
-			}
-		}
-	}
-
-	for (int i = 0; i < vec.size(); ++i) {
+	sort(vec.begin(), vec.end(),cmp);
+	for (int i = 0; i < vec.size(); ++i) 
+	{
 		cout << vec[i].name << " " << vec[i].ave << endl;
 	}
 	return 0;
